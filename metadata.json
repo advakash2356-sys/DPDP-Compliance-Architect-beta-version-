@@ -1,0 +1,6 @@
+{
+  "name": "Data Rakshak",
+  "description": "Comprehensive DPDP 2023 Compliance Companion tailored for Indian businesses to easily manage privacy rules and local data laws.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

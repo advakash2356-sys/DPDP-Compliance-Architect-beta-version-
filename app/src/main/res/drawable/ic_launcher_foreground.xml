@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Outer security shield border -->
+    <path
+        android:strokeColor="#D0BCFF"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 54,18 L 24,28 V 56 Q 24,75 54,86 Q 84,75 84,56 V 28 Z" />
+
+    <!-- Inner golden shield filled with safety gold linear gradient -->
+    <path
+        android:pathData="M 54,23 L 28,32 V 56 Q 28,72 54,81 Q 80,72 80,56 V 32 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="54"
+                android:startY="23"
+                android:endX="54"
+                android:endY="81"
+                android:type="linear">
+                <item android:color="#FDE047" android:offset="0" />
+                <item android:color="#EAB308" android:offset="0.5" />
+                <item android:color="#854D0E" android:offset="1" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Metallic lock shackle -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3.0"
+        android:strokeLineCap="round"
+        android:pathData="M 46,52 V 45 Q 46,38 54,38 Q 62,38 62,45 V 52" />
+
+    <!-- Padlock Body (Rich Charcoal/Indigo) -->
+    <path
+        android:fillColor="#111827"
+        android:pathData="M 40,51 H 68 A 3,3 0 0 1 71,54 V 71 A 3,3 0 0 1 68,74 H 40 A 3,3 0 0 1 37,71 V 54 A 3,3 0 0 1 40,51 Z" />
+
+    <!-- Secure verified inner green tick symbol -->
+    <path
+        android:strokeColor="#4ADE80"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 47,63 L 52,68 L 61,59" />
+
+</vector>
