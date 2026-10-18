@@ -121,3 +121,13 @@ DPDP-Compliance-Architect-beta-version-/
 ## Configuration
 
 Set the bootstrap admin email in `app/src/main/java/com/example/data/AppConfig.kt` (`ADMIN_EMAIL`, placeholder `admin@example.com`) before building. Not built or tested here; build in Android Studio.
+
+## Add your API key
+
+AI features need your own key (free Gemini key: https://aistudio.google.com/apikey). No key is committed to this repo.
+
+1. Create a `local.properties` file in the project root (it is git-ignored).
+2. Add: `GEMINI_API_KEY=your_key_here`
+3. Rebuild in Android Studio. The Secrets Gradle plugin exposes it as `BuildConfig`. Without a key the app uses its built-in fallbacks.
+
+**Privacy:** the key stays in your own `local.properties` / your build, is never committed or logged, and is sent only to the AI provider's API. Delete the line and rebuild to remove it. There is no in-app key screen yet because these Android apps are untested in this environment; a settings screen is a planned follow-up.
