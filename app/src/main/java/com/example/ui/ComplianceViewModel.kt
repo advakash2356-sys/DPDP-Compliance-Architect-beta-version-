@@ -1,5 +1,7 @@
 package com.example.ui
 
+import com.example.data.AppConfig
+
 import android.app.Application
 import kotlinx.coroutines.CoroutineExceptionHandler
 import android.util.Log
@@ -726,7 +728,7 @@ class ComplianceViewModel(application: Application) : AndroidViewModel(applicati
             viewModelScope.launch(exceptionHandler) {
                 val profileToCreate = UserProfile(
                     name = "Advocate Akash", // Default from email name
-                    email = "Adv.Akash2356@gmail.com",
+                    email = AppConfig.ADMIN_EMAIL,
                     phone = _phoneInput.value,
                     hasAccountConsent = true,
                     hasMarketingConsent = false, // Keep false initially to demonstrate granular consent
@@ -1525,7 +1527,7 @@ class ComplianceViewModel(application: Application) : AndroidViewModel(applicati
             }
 
             // Protection: Bootstrap admin cannot be deactivated
-            if (targetUser.email.equals("adv.akash2356@gmail.com", ignoreCase = true)) {
+            if (targetUser.email.equals(AppConfig.ADMIN_EMAIL, ignoreCase = true)) {
                 _feedbackMessage.value = "Security Rule: The initial bootstrap administrator cannot be deactivated."
                 return@launch
             }
@@ -1581,7 +1583,7 @@ class ComplianceViewModel(application: Application) : AndroidViewModel(applicati
                 return@launch
             }
 
-            if (targetUser.email.equals("adv.akash2356@gmail.com", ignoreCase = true) && targetRole != "ADMIN") {
+            if (targetUser.email.equals(AppConfig.ADMIN_EMAIL, ignoreCase = true) && targetRole != "ADMIN") {
                 _feedbackMessage.value = "Security Rule: The initial bootstrap administrator role cannot be downgraded."
                 return@launch
             }
@@ -1629,7 +1631,7 @@ class ComplianceViewModel(application: Application) : AndroidViewModel(applicati
                 return@launch
             }
 
-            if (targetUser.email.equals("adv.akash2356@gmail.com", ignoreCase = true)) {
+            if (targetUser.email.equals(AppConfig.ADMIN_EMAIL, ignoreCase = true)) {
                 _feedbackMessage.value = "Security Rule: The initial bootstrap administrator cannot be removed."
                 return@launch
             }

@@ -1,5 +1,7 @@
 package com.example.ui.screens
 
+import com.example.data.AppConfig
+
 import androidx.compose.animation.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -345,7 +347,7 @@ private fun UserRowCard(
     onChangeRole: (String) -> Unit,
     onRevokeAccess: () -> Unit
 ) {
-    val isBootstrapAdmin = user.email.equals("adv.akash2356@gmail.com", ignoreCase = true)
+    val isBootstrapAdmin = user.email.equals(AppConfig.ADMIN_EMAIL, ignoreCase = true)
     var showActionDialog by remember { mutableStateOf(false) }
 
     Card(

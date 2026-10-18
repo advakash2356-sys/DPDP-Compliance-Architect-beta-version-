@@ -29,7 +29,7 @@ object GoogleAuthService {
     fun createVerifiedGoogleIdentity(email: String, customName: String? = null): GoogleVerifiedIdentity {
         val cleanEmail = email.trim().lowercase()
         val subjectId = generateStableGoogleSubjectId(cleanEmail)
-        val defaultName = if (cleanEmail == "adv.akash2356@gmail.com") {
+        val defaultName = if (cleanEmail == AppConfig.ADMIN_EMAIL) {
             "Adv. Akash"
         } else {
             val prefix = cleanEmail.substringBefore("@")

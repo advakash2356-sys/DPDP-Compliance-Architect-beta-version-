@@ -1,5 +1,7 @@
 package com.example.ui.screens
 
+import com.example.data.AppConfig
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -170,7 +172,7 @@ fun AccessDeniedScreen(
                                 modifier = Modifier.size(16.dp)
                             )
                             Text(
-                                text = "Adv.akash2356@gmail.com",
+                                text = AppConfig.ADMIN_EMAIL,
                                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
                                 color = MaterialTheme.colorScheme.primary
                             )

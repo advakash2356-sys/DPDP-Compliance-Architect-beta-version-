@@ -52,11 +52,11 @@ class ComplianceRepository(private val database: AppDatabase) {
     }
 
     /**
-     * Seeds the initial administrator account (Adv.akash2356@gmail.com)
+     * Seeds the initial administrator account (AppConfig.ADMIN_EMAIL)
      * if not already present in the database.
      */
     suspend fun seedInitialAdminIfEmpty() {
-        val adminEmail = "adv.akash2356@gmail.com"
+        val adminEmail = AppConfig.ADMIN_EMAIL
         val existingAdmin = authorizedUserDao.getUserByEmail(adminEmail)
         if (existingAdmin == null) {
             val admin = AuthorizedUserEntity(

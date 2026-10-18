@@ -1,5 +1,7 @@
 package com.example
 
+import com.example.data.AppConfig
+
 import android.app.Application
 import androidx.test.core.app.ApplicationProvider
 import com.example.data.AppDatabase
@@ -34,7 +36,7 @@ class AuthAndAccessControlTest {
     @Test
     fun testBootstrapAdminSeeding() = runBlocking {
         repository.seedInitialAdminIfEmpty()
-        val admin = repository.getUserByEmail("adv.akash2356@gmail.com")
+        val admin = repository.getUserByEmail(AppConfig.ADMIN_EMAIL)
         assertNotNull(admin)
         assertEquals("ADMIN", admin?.role)
         assertEquals("ACTIVE", admin?.status)
@@ -61,13 +63,13 @@ class AuthAndAccessControlTest {
         repository.seedInitialAdminIfEmpty()
         val viewModel = ComplianceViewModel(application)
 
-        viewModel.signInWithGoogle("Adv.akash2356@gmail.com")
+        viewModel.signInWithGoogle(AppConfig.ADMIN_EMAIL)
         Thread.sleep(200)
 
         val state = viewModel.authState.value
         assertTrue("Expected Authorized state for initial admin", state is AuthState.Authorized)
         val authorized = state as AuthState.Authorized
-        assertEquals("adv.akash2356@gmail.com", authorized.user.email)
+        assertEquals(AppConfig.ADMIN_EMAIL, authorized.user.email)
         assertEquals("ADMIN", authorized.user.role)
         assertEquals("ACTIVE", authorized.user.status)
         assertNotNull(authorized.user.googleSubjectId)
@@ -79,7 +81,7 @@ class AuthAndAccessControlTest {
         val viewModel = ComplianceViewModel(application)
 
         // 1. Sign in as Admin
-        viewModel.signInWithGoogle("Adv.akash2356@gmail.com")
+        viewModel.signInWithGoogle(AppConfig.ADMIN_EMAIL)
         Thread.sleep(200)
 
         // 2. Admin adds a new authorized user
@@ -115,7 +117,7 @@ class AuthAndAccessControlTest {
         val viewModel = ComplianceViewModel(application)
 
         // Sign in as Admin
-        viewModel.signInWithGoogle("Adv.akash2356@gmail.com")
+        viewModel.signInWithGoogle(AppConfig.ADMIN_EMAIL)
         Thread.sleep(200)
 
         // Add user
@@ -139,7 +141,7 @@ class AuthAndAccessControlTest {
         assertTrue(viewModel.authState.value is AuthState.AccessDenied)
 
         // Admin logs back in and reactivates user
-        viewModel.signInWithGoogle("Adv.akash2356@gmail.com")
+        viewModel.signInWithGoogle(AppConfig.ADMIN_EMAIL)
         Thread.sleep(200)
 
         viewModel.toggleUserStatus(user.id)
@@ -162,16 +164,16 @@ class AuthAndAccessControlTest {
         repository.seedInitialAdminIfEmpty()
         val viewModel = ComplianceViewModel(application)
 
-        viewModel.signInWithGoogle("Adv.akash2356@gmail.com")
+        viewModel.signInWithGoogle(AppConfig.ADMIN_EMAIL)
         Thread.sleep(200)
 
-        val admin = repository.getUserByEmail("adv.akash2356@gmail.com")!!
+        val admin = repository.getUserByEmail(AppConfig.ADMIN_EMAIL)!!
 
         // Try deactivating bootstrap admin
         viewModel.toggleUserStatus(admin.id)
         Thread.sleep(200)
 
-        val unchangedAdmin = repository.getUserByEmail("adv.akash2356@gmail.com")!!
+        val unchangedAdmin = repository.getUserByEmail(AppConfig.ADMIN_EMAIL)!!
         assertEquals("ACTIVE", unchangedAdmin.status)
         assertTrue(unchangedAdmin.authorized)
 
@@ -179,14 +181,14 @@ class AuthAndAccessControlTest {
         viewModel.changeUserRole(admin.id, "USER")
         Thread.sleep(200)
 
-        val stillAdmin = repository.getUserByEmail("adv.akash2356@gmail.com")!!
+        val stillAdmin = repository.getUserByEmail(AppConfig.ADMIN_EMAIL)!!
         assertEquals("ADMIN", stillAdmin.role)
 
         // Try revoking bootstrap admin
         viewModel.revokeUserAccess(admin.id)
         Thread.sleep(200)
 
-        val stillExists = repository.getUserByEmail("adv.akash2356@gmail.com")
+        val stillExists = repository.getUserByEmail(AppConfig.ADMIN_EMAIL)
         assertNotNull(stillExists)
     }
 }

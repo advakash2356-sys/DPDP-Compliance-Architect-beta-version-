@@ -117,3 +117,7 @@ DPDP-Compliance-Architect-beta-version-/
                 └── xml/
                     ├── backup_rules.xml
                     └── data_extraction_rules.xml
+
+## Configuration
+
+Set the bootstrap admin email in `app/src/main/java/com/example/data/AppConfig.kt` (`ADMIN_EMAIL`, placeholder `admin@example.com`) before building. Not built or tested here; build in Android Studio.

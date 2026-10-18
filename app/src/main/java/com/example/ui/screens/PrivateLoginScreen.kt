@@ -1,5 +1,7 @@
 package com.example.ui.screens
 
+import com.example.data.AppConfig
+
 import androidx.compose.animation.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -240,15 +242,15 @@ fun PrivateLoginScreen(
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    // Option 1: Initial Bootstrap Administrator (Adv.akash2356@gmail.com)
+                    // Option 1: Initial Bootstrap Administrator (AppConfig.ADMIN_EMAIL)
                     AccountSelectionTile(
                         displayName = "Adv. Akash",
-                        email = "Adv.akash2356@gmail.com",
+                        email = AppConfig.ADMIN_EMAIL,
                         tag = "Initial Admin",
                         isAdmin = true,
                         onClick = {
                             showAccountChooser = false
-                            viewModel.signInWithGoogle("Adv.akash2356@gmail.com", "Adv. Akash")
+                            viewModel.signInWithGoogle(AppConfig.ADMIN_EMAIL, "Adv. Akash")
                         }
                     )
 
