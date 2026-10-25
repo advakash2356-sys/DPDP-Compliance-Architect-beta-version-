@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { PENALTIES, SECTIONS, CHECKLIST, score, breachDeadline, noticeText, TIMELINE } from "../web/data.js";
+import { PENALTIES, SECTIONS, CHECKLIST, score, breachDeadline, noticeText, TIMELINE } from "../lib/content.js";
 assert.equal(PENALTIES.length, 7);
 assert.equal(PENALTIES.find(p => p.ref === "s. 8(5)").max, "₹250 crore");
 assert.equal(PENALTIES.find(p => p.ref === "s. 10").max, "₹150 crore");

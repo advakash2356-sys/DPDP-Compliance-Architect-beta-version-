@@ -6,14 +6,16 @@ An educational workspace on India's **Digital Personal Data Protection Act, 2023
 
 > **Educational, not legal advice.** Verify against the official texts on MeitY.
 
-## Web app (`web/`, deployed)
+## Web app (`web/` + `api/`, deployed)
+- **Subscription model:** the landing page is public; the workspace needs Google sign-in. There is a 7-day free trial stored server-side, then a paywall (payments are off: "Subscription coming soon"). Every tool is gated server-side. Setup: see `SUBSCRIPTION_SETUP.md`.
+- Legal pages: pricing, terms, privacy, refund and cancellation.
 - **Self-assessment:** 12 checks, each cited to a section or Rule, giving a readiness percentage and a gap list. Answers are saved only in your browser (localStorage), and you can print the result.
 - **Notice drafter:** a Section 5 / Rule 3 notice template.
 - **Breach clock:** the Rule 7 72-hour deadline calculator.
 - **Section guide and penalty Schedule (s. 33):** verified against the Gazette texts.
-- Light and dark modes, mobile layout, WCAG AA and reduced motion. Static HTML, CSS and JS with no build dependencies.
+- Light and dark modes, mobile layout, WCAG AA and reduced motion. Landing page: GSAP ScrollTrigger pinned scenes, Lenis smooth scroll, layered parallax and canvas dust.
 
-Run locally: `cd web && python3 -m http.server`. Test: `node tests/data.test.mjs`. Vercel uses `vercel.json` (output `web/`).
+Run locally: `npm i && DEV_AUTH=1 npm run dev` (local test sign-in only). Test: `npm test`. Vercel uses `vercel.json` (output `web/`).
 See `AUDIT.md`, `DESIGN.md` and `THIRD_PARTY_NOTICES.md`.
 
 ## Android app (original, `app/`, untested)

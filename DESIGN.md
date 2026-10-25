@@ -25,3 +25,9 @@
 
 ## Sales psychology (honest)
 There is one dominant CTA, "Start the free self-assessment", repeated in the hero, the final band and a sticky corner button, plus one ghost secondary. The real deadline (13 May 2027, from Rule 1) is used as true urgency, and risk reversal is real: free, no account, data stays in the browser. There is **no** fake scarcity, testimonials, user counts or statistics.
+
+## v2 (26 Oct 2026)
+- **Hero:** layered parallax depth (image, glow, outlined § glyph and a gold-dust canvas) driven by scroll and the pointer, with a split-word headline reveal at 12.5vw.
+- **How it works:** a GSAP ScrollTrigger pinned scene with three chapters and a progress rule. A drifting "13.05.27" display date, a varied bento with spotlight hover and frosted glass, magnetic CTAs, and a gradient-bordered premium pricing card.
+- Under reduced motion there is no GSAP or Lenis, scenes stack statically, and the canvas is hidden.
+- **Workspace:** gated states (sign-in, paywall, setup), a trial banner, a readiness ring and animated tab panels.
