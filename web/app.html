@@ -1,0 +1,72 @@
+<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Workspace · DPDP Compliance Architect</title><meta name="description" content="DPDP self-assessment, notice drafter, breach clock and section guide. Educational, not legal advice.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%238C1D2B'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='%23F5EFE3' font-family='Georgia'%3E§%3C/text%3E%3C/svg%3E"><link rel="stylesheet" href="/styles.css"><script src="/theme.js" type="module"></script></head><body>
+<a class="skip" href="#pane">Skip to content</a>
+<div class="app"><aside class="side"><a class="brand" href="/">DPDP <em>Architect</em></a>
+ <nav role="tablist" aria-label="Workspace sections">
+  <button role="tab" id="t-assess" aria-controls="assess" data-p="assess">Self-assessment</button>
+  <button role="tab" id="t-notice" aria-controls="notice" data-p="notice">Notice drafter</button>
+  <button role="tab" id="t-breach" aria-controls="breach" data-p="breach">Breach clock</button>
+  <button role="tab" id="t-guide" aria-controls="guide" data-p="guide">Section guide</button>
+  <button role="tab" id="t-penalties" aria-controls="penalties" data-p="penalties">Penalties</button>
+ </nav><p class="foot" style="font-size:.8rem;color:var(--muted);margin-top:2rem;padding:0 .6rem">Saved only in this browser.<br>Built with Akash Sync Agent.</p></aside>
+<main class="pane" id="pane">
+ <div class="topbar"><p class="label">Workspace</p><button class="theme" id="theme" type="button"></button></div>
+ <p class="disclaimer"><strong>Educational, not legal advice.</strong> Use this to learn and to prepare questions for your advocate. Check the official <a href="https://www.meity.gov.in/documents/act-and-policies/digital-personal-data-protection-act-2023">Act</a> and <a href="https://www.meity.gov.in/documents/act-and-policies/digital-personal-data-protection-rules-2025-gDOxUjMtQWa">Rules</a>.</p>
+
+ <section class="panel" id="assess" role="tabpanel" aria-labelledby="t-assess"><h1>Self-assessment</h1>
+  <div class="card" aria-live="polite"><div style="display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap"><div class="big" id="pct">0%</div><div style="flex:1;min-width:200px"><div class="meter"><i id="bar"></i></div><p id="sumtxt" style="margin:.5rem 0 0;color:var(--muted)"></p></div></div></div>
+  <form id="qs"></form>
+  <div class="card"><h3 style="font-size:1.3rem">Your gaps</h3><ul id="gaps"></ul>
+  <div class="cta-row no-print"><button class="btn solid" type="button" onclick="print()">Print or save as PDF</button><button class="btn ghost" type="button" id="reset">Reset answers</button></div></div>
+  <p style="font-size:.85rem;color:var(--muted)">The percentage is the share of applicable checks you answered "Yes". It is a self-reported indicator, not a legal opinion or certification.</p></section>
+
+ <section class="panel" id="notice" role="tabpanel" aria-labelledby="t-notice"><h1>Notice drafter</h1><p>Section 5 of the Act and Rule 3 of the Rules. Fill in the fields and the draft updates as you type.</p>
+  <form id="nf" class="card">
+   <div class="field"><label for="business">Business name</label><input type="text" id="business" name="business" autocomplete="organization"></div>
+   <div class="field"><label for="data">Itemised personal data you collect</label><textarea id="data" name="data" placeholder="Name, mobile number, email address, delivery address"></textarea></div>
+   <div class="field"><label for="purpose">Specific purpose</label><input type="text" id="purpose" name="purpose" placeholder="process and deliver your orders"></div>
+   <div class="field"><label for="withdraw">Where to withdraw consent</label><input type="text" id="withdraw" name="withdraw" placeholder="Settings › Privacy, or privacy@example.in"></div>
+   <div class="field"><label for="contact">Contact for rights and grievances</label><input type="text" id="contact" name="contact" placeholder="Grievance Officer, privacy@example.in"></div>
+   <div class="field"><label for="days">Response period in days (Rule 14(3): not exceeding 90)</label><input type="number" id="days" name="days" min="1" max="90" value="30"></div>
+  </form>
+  <pre class="out" id="nout"></pre><div class="cta-row no-print"><button class="btn solid" type="button" id="copy">Copy draft</button><span id="copied" role="status" style="align-self:center;color:var(--muted)"></span></div></section>
+
+ <section class="panel" id="breach" role="tabpanel" aria-labelledby="t-breach"><h1>Breach clock</h1>
+  <p>Rule 7 requires you to tell affected people and the Board <strong>without delay</strong>. The detailed report to the Board is due <strong>within 72 hours</strong> of becoming aware, unless the Board allows longer on a written request. Rule 7 comes into force on 13 May 2027.</p>
+  <div class="card"><div class="field"><label for="aware">When did you become aware of the breach?</label><input type="datetime-local" id="aware"></div><p id="bout" class="big" style="font-size:2rem" aria-live="polite"></p><p id="bleft" style="color:var(--muted)"></p></div>
+  <div class="card"><h3 style="font-size:1.3rem">What the notice to affected people must cover (Rule 7(1))</h3><ol><li>A description of the breach: its nature, extent and when it happened.</li><li>The likely consequences for them.</li><li>The mitigation measures taken or under way.</li><li>Safety measures they can take.</li><li>Business contact details of a person who can answer their questions.</li></ol></div></section>
+
+ <section class="panel" id="guide" role="tabpanel" aria-labelledby="t-guide"><h1>Section guide</h1><div id="glist"></div></section>
+ <section class="panel" id="penalties" role="tabpanel" aria-labelledby="t-penalties"><h1>Penalties (Schedule, s. 33)</h1><p>These are maximum amounts. The Board decides the actual penalty after an inquiry, considering the factors in s. 33(2).</p><div style="overflow-x:auto"><table><thead><tr><th>Breach</th><th>Provision</th><th>Up to</th></tr></thead><tbody id="ptable"></tbody></table></div></section>
+</main></div>
+<script type="module">
+import {CHECKLIST,score,noticeText,breachDeadline,SECTIONS,PENALTIES} from "/data.js";import {bindTheme} from "/theme.js";
+bindTheme(document.getElementById("theme"));
+const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
+const tabs=[...document.querySelectorAll("[role=tab]")];
+function show(p){if(!$(p))p="assess";tabs.forEach(t=>{const on=t.dataset.p===p;t.setAttribute("aria-selected",on);t.tabIndex=on?0:-1});document.querySelectorAll(".panel").forEach(s=>s.classList.toggle("on",s.id===p));history.replaceState(null,"","#"+p);scrollTo(0,0)}
+tabs.forEach((t,i)=>{t.onclick=()=>show(t.dataset.p);t.onkeydown=e=>{if(e.key==="ArrowDown"||e.key==="ArrowRight"){tabs[(i+1)%tabs.length].focus();show(tabs[(i+1)%tabs.length].dataset.p)}if(e.key==="ArrowUp"||e.key==="ArrowLeft"){const j=(i-1+tabs.length)%tabs.length;tabs[j].focus();show(tabs[j].dataset.p)}}});
+show(location.hash.slice(1));addEventListener("load",()=>scrollTo(0,0));
+// assessment
+let ans=JSON.parse(localStorage.getItem("dpdp_answers")||"{}");
+$("qs").innerHTML=CHECKLIST.map(c=>`<div class="q"><p id="q-${c.id}" style="margin:0"><small>${c.ref}</small>${esc(c.q)}</p><div class="seg" role="radiogroup" aria-labelledby="q-${c.id}">${["yes","no","na"].map(v=>`<label><input type="radio" name="${c.id}" value="${v}" ${ans[c.id]===v?"checked":""}><span>${v==="na"?"N/A":v[0].toUpperCase()+v.slice(1)}</span></label>`).join("")}</div></div>`).join("");
+function render(){const s=score(ans);$("pct").textContent=s.pct+"%";$("bar").style.width=s.pct+"%";
+ $("sumtxt").textContent=`${s.yes} of ${s.total-s.na} applicable checks met${s.na?` · ${s.na} not applicable`:""}.`;
+ $("gaps").innerHTML=s.gaps.length?s.gaps.map(g=>`<li><strong>${g.ref}</strong>: ${esc(g.q)}${ans[g.id]?"":" <em>(unanswered)</em>"}</li>`).join(""):"<li>No open gaps on your answers. Have counsel confirm.</li>"}
+$("qs").onchange=e=>{ans[e.target.name]=e.target.value;localStorage.setItem("dpdp_answers",JSON.stringify(ans));render()};
+$("reset").onclick=()=>{if(confirm("Clear all answers saved in this browser?")){ans={};localStorage.removeItem("dpdp_answers");$("qs").reset();render()}};render();
+// notice
+const nf=$("nf");let saved=JSON.parse(localStorage.getItem("dpdp_notice")||"{}");for(const [k,v] of Object.entries(saved))if(nf.elements[k])nf.elements[k].value=v;
+function rn(){const f=Object.fromEntries(new FormData(nf));let d=parseInt(f.days,10);if(!(d>=1&&d<=90))f.days="";$("nout").textContent=noticeText(f);localStorage.setItem("dpdp_notice",JSON.stringify(f))}
+nf.oninput=rn;rn();$("copy").onclick=async()=>{try{await navigator.clipboard.writeText($("nout").textContent);$("copied").textContent="Copied."}catch{$("copied").textContent="Select the text and copy it manually."}};
+// breach
+function rb(){const v=$("aware").value;if(!v){$("bout").textContent="";$("bleft").textContent="Enter a date and time to calculate the deadline.";return}
+ const d=breachDeadline(v);$("bout").textContent="Report due by "+d.toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"});
+ const h=(d-Date.now())/36e5;$("bleft").textContent=h>0?`${Math.floor(h)} h ${Math.floor((h%1)*60)} min left (your device's time zone).`:"This deadline has passed. Ask counsel about seeking an extension from the Board."}
+$("aware").oninput=rb;rb();setInterval(rb,60000);
+$("glist").innerHTML=SECTIONS.map(([r,t,d])=>`<div class="card"><p class="label">${r}</p><h3 style="font-size:1.35rem;margin:.4rem 0">${esc(t)}</h3><p style="margin:0;color:var(--muted)">${esc(d)}</p></div>`).join("");
+$("ptable").innerHTML=PENALTIES.map(p=>`<tr><td>${esc(p.breach)}</td><td>${p.ref}</td><td class="amt">${esc(p.max)}</td></tr>`).join("");
+</script></body></html>

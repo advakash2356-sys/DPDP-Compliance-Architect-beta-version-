@@ -29,7 +29,7 @@ object AgenticAuditorService {
         - Section 6: Consent must be free, specific, informed, unconditional, and unambiguous with a clear affirmative action. Option to withdraw consent must be as easy as giving it.
         - Section 9: Verifiable parental/guardian consent is mandatory for processing children's personal data (<18 years). No tracking or behavioral monitoring allowed.
         - Section 12: Clear Right to Erasure, correction, and access must be provided through seamless self-service UI flows.
-        - Section 13: Users must have the right to nominate an individual to exercise their data protection rights in the event of death or incapacity.
+        - Section 14: Users must have the right to nominate an individual to exercise their data protection rights in the event of death or incapacity.
     """.trimIndent()
 
     /**
@@ -183,8 +183,8 @@ object AgenticAuditorService {
             delaySimulation(1000)
             return@withContext """
                 [DPB India Update Simulation - June 2026]
-                - Clarified parental consent Rule 4.2: Game applications must utilize verifiable visual proof or secure authentication links linked to India National IDs.
-                - Declared penalty schedules: Non-notification of structural data breaches within 72 hours subject to fine up to ₹150 Crores under Chapter VII.
+                - Parental consent: Rule 10 of the DPDP Rules 2025 requires verifiable consent of a parent who is an identifiable adult (e.g. via reliable existing details or a virtual token).
+                - Penalty Schedule (s. 33): failure to intimate a personal data breach (s. 8(6)) may attract a penalty up to ₹200 crore; Rule 7 requires a detailed report to the Board within 72 hours.
                 - Established that optional telemetry toggles must be checked 'OFF' by default in initial layouts.
             """.trimIndent()
         }
@@ -254,7 +254,7 @@ object AgenticAuditorService {
         if (text.contains("Section 6", ignoreCase = true)) matches.add("Section 6 (Consent)")
         if (text.contains("Section 9", ignoreCase = true)) matches.add("Section 9 (Children)")
         if (text.contains("Section 12", ignoreCase = true)) matches.add("Section 12 (Erasure)")
-        if (text.contains("Section 13", ignoreCase = true)) matches.add("Section 13 (Nomination)")
+        if (text.contains("Section 13", ignoreCase = true)) matches.add("Section 13 (Grievance redressal)")
         
         return if (matches.isEmpty()) "Section 5, Section 6" else matches.joinToString(", ")
     }
@@ -601,8 +601,8 @@ fun ParentalConsentVerification(onVerified: (Boolean) -> Unit) {
             if (risk == "LOW") risk = "MEDIUM"
         }
         if (!hasGrievance) {
-            violations.add("🚨 **MISSING REDRESSAL / GRIEVANCE OFFICER (Section 13)**: Under Section 13/14, you MUST name a designated Grievance Redressal Officer along with an active email address in the policy.")
-            sections.add("Section 13 & 14")
+            violations.add("🚨 **MISSING REDRESSAL / GRIEVANCE OFFICER (Section 8(9), 8(10) & 13)**: Publish the business contact of a person who can answer questions on processing and provide a grievance redressal mechanism (Rule 14(3): response period not exceeding 90 days).")
+            sections.add("Section 8(10) & 13")
             if (risk == "LOW") risk = "MEDIUM"
         }
 
@@ -626,7 +626,7 @@ fun ParentalConsentVerification(onVerified: (Boolean) -> Unit) {
                 2. CONSENT PRINCIPLES (Section 6): Your consent is free, specific, informed, unconditional, and unambiguous. You have the right to withdraw consent at any instant as easily as granting it via the dynamic 'Purge User Trace' button.
                 3. CHILD PROTECTION OBLIGATIONS (Section 9): Our application does not engage in tracking, behavioral monitoring, or targeted advertising centered around children. Verifiable parental authorization is required for nominee entries.
                 4. DATA ERASURE & RIGHT TO ACCURACY (Section 12): You possess absolute rights to correct, complete, or request total deletion (erasure) of all hosted or logged personal attributes instantly.
-                5. GRIEVANCE REDRESSAL OFFICER (Section 13 & 14): For queries or DPDP rights execution, contact our designated Grievance Officer at:
+                5. GRIEVANCE REDRESSAL (Sections 8(9), 8(10) & 13): For queries or DPDP rights execution, contact our designated Grievance Officer at:
                    Email: compliance-officer@dpdp-safe.example.in
                    Address: MeitY Incubator, Electronics Niketan, New Delhi, India.
             """.trimIndent()

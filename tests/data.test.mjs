@@ -1,0 +1,17 @@
+import assert from "node:assert/strict";
+import { PENALTIES, SECTIONS, CHECKLIST, score, breachDeadline, noticeText, TIMELINE } from "../web/data.js";
+assert.equal(PENALTIES.length, 7);
+assert.equal(PENALTIES.find(p => p.ref === "s. 8(5)").max, "₹250 crore");
+assert.equal(PENALTIES.find(p => p.ref === "s. 10").max, "₹150 crore");
+assert.equal(SECTIONS.find(s => s[0] === "s. 14")[1], "Right to nominate");
+assert.equal(SECTIONS.find(s => s[0] === "s. 13")[1], "Right of grievance redressal");
+const all = Object.fromEntries(CHECKLIST.map(c => [c.id, "yes"]));
+assert.equal(score(all).pct, 100);
+assert.equal(score({}).pct, 0);
+assert.equal(score({ ...all, children: "na", breach: "no" }).gaps.length, 1);
+assert.equal(breachDeadline("2026-01-01T00:00:00Z").toISOString(), "2026-01-04T00:00:00.000Z");
+assert.equal(breachDeadline("bad"), null);
+assert.match(noticeText({ business: "Acme" }), /Acme/);
+assert.match(noticeText({}), /not legal advice/);
+assert.equal(TIMELINE.at(-1).date, "2027-05-13");
+console.log("all data tests passed");

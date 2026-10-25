@@ -1,6 +1,23 @@
-# DPDP-Compliance-Architect-beta-version-
+# DPDP Compliance Architect
 
-DPDP Compliance Architect beta version, developed by Adv. Akash Sharma.
+An educational workspace on India's **Digital Personal Data Protection Act, 2023** and **DPDP Rules, 2025**, by Adv. Akash Sharma. Built with Akash Sync Agent.
+
+**Live:** https://dpdp-compliance-architect-beta-vers.vercel.app
+
+> **Educational, not legal advice.** Verify against the official texts on MeitY.
+
+## Web app (`web/`, deployed)
+- **Self-assessment:** 12 checks, each cited to a section or Rule, giving a readiness percentage and a gap list. Answers are saved only in your browser (localStorage), and you can print the result.
+- **Notice drafter:** a Section 5 / Rule 3 notice template.
+- **Breach clock:** the Rule 7 72-hour deadline calculator.
+- **Section guide and penalty Schedule (s. 33):** verified against the Gazette texts.
+- Light and dark modes, mobile layout, WCAG AA and reduced motion. Static HTML, CSS and JS with no build dependencies.
+
+Run locally: `cd web && python3 -m http.server`. Test: `node tests/data.test.mjs`. Vercel uses `vercel.json` (output `web/`).
+See `AUDIT.md`, `DESIGN.md` and `THIRD_PARTY_NOTICES.md`.
+
+## Android app (original, `app/`, untested)
+Several features in the Android app are simulated (URL scanner, live feed, OTP). See AUDIT.md.
 
 ## Features
 
@@ -9,7 +26,7 @@ DPDP Compliance Architect beta version, developed by Adv. Akash Sharma.
 * **Compliance Guide & Legal Documentation**: Access statutory guidance and generated legal documents through `ComplianceGuideService`, `ComplianceGuideScreen`, and `ComplianceDocs`.
 * **Data Subject Rights & Erasure**: Manage data erasure workflows using `ErasureHandler` and capture consent notices with `ConsentDisclaimer`.
 * **Intake & URL Processing**: Support for user and site data intake using `IntakeFormCard` and `UrlInputComponent`.
-* **Legal Updates**: Real-time legal tracking through `LegalUpdateFeed`.
+* **Legal Updates**: Manually entered legal updates via `LegalUpdateFeed` (not live tracking).
 * **Authentication & Access Control**: Authentication support via `GoogleAuthService`, `PrivateLoginScreen`, `AccessDeniedScreen`, and role-based administration with `AdminUserManagementScreen`.
 * **Local Data Persistence**: Structured data storage using `AppDatabase`, `Entities`, and `Daos`.
 

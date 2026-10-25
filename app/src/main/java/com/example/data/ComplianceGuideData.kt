@@ -91,7 +91,7 @@ fun DpdpNoticeSheet(
     }
 }
             """.trimIndent(),
-            statutoryPenalty = "Up to ₹250 Crore for major non-compliance under Schedule 1.",
+            statutoryPenalty = "Up to ₹50 crore (residuary, Schedule item 7) for breach of notice obligations.",
             officialGazetteRef = "The Gazette of India Extraordinary, Act No. 22 of 2023, Chapter II, Section 5",
             officialUrl = "https://www.meity.gov.in/content/digital-personal-data-protection-act-2023",
             severity = ComplianceSeverity.CRITICAL,
@@ -130,7 +130,7 @@ suspend fun recordConsentState(
     auditDao.insertAuditLog(log)
 }
             """.trimIndent(),
-            statutoryPenalty = "Up to ₹250 Crore under Schedule 1 for unlawful data processing.",
+            statutoryPenalty = "Up to ₹50 crore (residuary, Schedule item 7) for breach of consent obligations.",
             officialGazetteRef = "The Gazette of India, Act No. 22 of 2023, Chapter II, Section 6",
             officialUrl = "https://www.meity.gov.in/content/digital-personal-data-protection-act-2023",
             severity = ComplianceSeverity.CRITICAL,
@@ -204,7 +204,7 @@ suspend fun executeStatutoryErasure(database: AppDatabase, userId: String): Stri
     return purgeToken
 }
             """.trimIndent(),
-            statutoryPenalty = "Up to ₹50 Crore for failing to fulfill data principal rights under Section 12.",
+            statutoryPenalty = "Up to ₹50 crore (residuary, Schedule item 7) for failing to give effect to rights under Section 12.",
             officialGazetteRef = "The Gazette of India, Act No. 22 of 2023, Chapter III, Section 12",
             officialUrl = "https://www.meity.gov.in/content/digital-personal-data-protection-act-2023",
             severity = ComplianceSeverity.CRITICAL,
@@ -240,7 +240,7 @@ suspend fun registerNominee(
     database.nomineeDao().insertNominee(nominee)
 }
             """.trimIndent(),
-            statutoryPenalty = "Up to ₹50 Crore under Schedule 1 for breach of Data Principal rights.",
+            statutoryPenalty = "Up to ₹50 crore (residuary, Schedule item 7) for breach of Data Principal rights.",
             officialGazetteRef = "The Gazette of India, Act No. 22 of 2023, Chapter III, Section 14",
             officialUrl = "https://www.meity.gov.in/content/digital-personal-data-protection-act-2023",
             severity = ComplianceSeverity.MEDIUM,
@@ -506,7 +506,7 @@ fun evaluatePennyDropMatch(kycName: String, bankAccountName: String): Boolean {
             detailedRequirements = listOf(
                 "Consent: DPDP Sec 6 unbundled consent applies across all apps; RBI adds specific prohibition on contact/media access.",
                 "Storage: DPDP requires purpose limitation & erasure; UIDAI bans plaintext Aadhaar; RBI mandates India-only data localization for payment data.",
-                "Breach Reporting: CERT-In mandates 6-hour cyber incident notification; DPDP Section 15 mandates reporting to DPBI and affected users.",
+                "Breach Reporting: CERT-In mandates 6-hour cyber incident notification; DPDP Section 8(6) and Rule 7 require intimation to the Board and affected Data Principals (detailed report within 72 hours).",
                 "Audit Trail: Immutable logging of consent, erasure, and KYC verification is required across all 3 regulatory bodies."
             ),
             technicalImplementationCode = """
@@ -528,7 +528,7 @@ object MultiRegulatoryComplianceDispatcher {
     }
 }
             """.trimIndent(),
-            statutoryPenalty = "Combined cumulative penalties exceeding ₹250 Cr + criminal liability under Aadhaar Act & IT Act 70B.",
+            statutoryPenalty = "DPDP penalties up to ₹250 crore per breach of s. 8(5) (security safeguards), plus any liability under the Aadhaar Act and IT Act.",
             officialGazetteRef = "DPDP Act 2023 | UIDAI Directives | RBI Master Directions | CERT-In Directions 2022",
             officialUrl = "https://www.cert-in.org.in/",
             severity = ComplianceSeverity.CRITICAL,
