@@ -22,6 +22,16 @@ function out_(o) { return ContentService.createTextOutput(JSON.stringify(o)).set
 function doPost(e) {
   var b; try { b = JSON.parse(e.postData.contents); } catch (x) { return out_({ ok: false, error: 'bad json' }); }
   if (!b.secret || b.secret !== PropertiesService.getScriptProperties().getProperty('SECRET')) return out_({ ok: false, error: 'forbidden' });
+  if (b.action === 'addEvent') {
+    var es = SpreadsheetApp.getActive().getSheetByName('Events') || SpreadsheetApp.getActive().insertSheet('Events');
+    if (es.getLastRow() === 0) es.appendRow(['at', 'vid', 'ev', 'src', 'page', 'text']);
+    es.appendRow([Number(b.at) || Date.now(), String(b.vid), String(b.ev), String(b.src), String(b.page), String(b.text)]);
+    return out_({ ok: true });
+  }
+  if (b.action === 'listAll') {
+    var rows = function (name) { var x = SpreadsheetApp.getActive().getSheetByName(name); if (!x || x.getLastRow() < 2) return []; var v = x.getDataRange().getValues(), h = v.shift(); return v.map(function (r) { var o = {}; h.forEach(function (k, i) { o[k] = r[i] instanceof Date ? r[i].getTime() : r[i]; }); return o; }); };
+    return out_({ ok: true, users: rows('users'), events: rows('Events') });
+  }
   var sub = String(b.sub || ''); if (!sub) return out_({ ok: false, error: 'no sub' });
   var lock = LockService.getScriptLock(); lock.waitLock(10000);
   try {
