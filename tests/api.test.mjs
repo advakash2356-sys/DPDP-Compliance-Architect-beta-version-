@@ -67,9 +67,16 @@ test("decide(): halted subscription loses access", () => {
   assert.equal(decide({ email: "a@b" }, { trialStart: 0, paidUntil: Date.now() + DAY, sub_status: "halted" }, Date.now()).access, false);
 });
 test("store not configured on Vercel fails closed", async () => {
+  const saved = { u: process.env.TRIAL_STORE_URL, s: process.env.TRIAL_STORE_SECRET };
+  delete process.env.TRIAL_STORE_URL; delete process.env.TRIAL_STORE_SECRET;
   __resetStore(); process.env.VERCEL = "1";
-  assert.equal(await st(H.me(await req(await tok("z@z.in")))), 503);
-  delete process.env.VERCEL; __resetStore();
+  try { assert.equal(await st(H.me(await req(await tok("z@z.in")))), 503); }
+  finally {
+    delete process.env.VERCEL;
+    if (saved.u !== undefined) process.env.TRIAL_STORE_URL = saved.u;
+    if (saved.s !== undefined) process.env.TRIAL_STORE_SECRET = saved.s;
+    __resetStore();
+  }
 });
 test("cross-origin requests are refused", async () => {
   const r = new Request("https://x.test/api", { headers: { origin: "https://evil.test", host: "x.test", authorization: "Bearer " + await tok("a@a.in") } });
