@@ -113,3 +113,9 @@ test("track accepts known events only", async () => {
   assert.equal((await r({ ev: "visit", src: "reddit-1<x>" })).status, 200);
   assert.equal((await store().listAll()).events[0].src, "reddit-1x");
 });
+test("site stays private: noindex on every page, robots.txt disallows all", async () => {
+  const { readFileSync, readdirSync } = await import("node:fs");
+  for (const f of readdirSync("web").filter(f => f.endsWith(".html"))) assert.match(readFileSync("web/" + f, "utf8"), /<meta name="robots" content="noindex/, f);
+  assert.match(readFileSync("web/robots.txt", "utf8"), /Disallow: \/\n/);
+  assert.match(readFileSync("vercel.json", "utf8"), /X-Robots-Tag/);
+});
