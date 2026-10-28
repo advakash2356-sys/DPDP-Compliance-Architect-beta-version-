@@ -1,5 +1,12 @@
 # DESIGN.md · DPDP Compliance Architect (web)
 
+## Guided walkthrough (Oct 2026, home + /check)
+**Subject:** a calm, guided DPDP self-assessment for small Indian businesses. **Emotion:** relief and clarity ("I know what to do next"). **Signature visual:** the end result shown up front (a sample score card labelled "Sample data"), then a 4-step progress path.
+Tokens (`web/guided.css`): bg #F6F3EC paper, surface #FFFDF8, ink #1E2A2B, muted #4F5D5C, accent #2F6B63 sage-teal, warm #B5652B (sample data only). Dark mode follows the system setting. Fraunces + Inter. ASA monogram = Built with Akash Sync Agent.
+Honest copy: hook → pain (dates, the Schedule) → one CTA. No guarantees, no urgency hype, soft launch.
+
+## Workspace and legal pages (earlier look)
+
 **Subject:** India's Digital Personal Data Protection Act, 2023 and DPDP Rules, 2025, for lawyers, law students, compliance officers and Indian businesses.
 **Emotion trigger:** trust, authority, quiet luxury. The feel of a senior counsel's chamber, not a SaaS dashboard.
 **Signature visual:** an open leather-bound law book, a brass pen and an oxblood wax seal on an ink-navy desk, with film grain. A slow scroll-linked zoom gives it depth.

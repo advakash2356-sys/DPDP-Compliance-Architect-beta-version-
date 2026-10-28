@@ -1,25 +1,66 @@
 <!doctype html><html lang="en-IN"><head>
 <meta charset="utf-8"><meta name="robots" content="noindex, nofollow, noarchive"><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/styles.css"><script src="/theme.js" type="module"></script>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%238C1D2B'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='%23F5EFE3' font-family='Georgia'%3E§%3C/text%3E%3C/svg%3E">
-<title>DPDP self-check · DPDP Compliance Architect</title>
-<meta name="description" content="A self-assessment tool to help you understand the DPDP Act, 2023 and DPDP Rules, 2025. For your assistance only; not legal advice.">
-<meta property="og:title" content="DPDP Compliance Architect"><meta property="og:description" content="Read the DPDP Act and Rules, check your gaps, draft your notice."><meta property="og:image" content="/assets/hero.jpg">
-<link rel="preload" as="image" href="/assets/hero.jpg" media="(min-width:701px)"><link rel="preload" as="image" href="/assets/hero-sm.jpg" media="(max-width:700px)">
-</head><body>
-<a class="skip" href="#main">Skip to content</a>
-<header class="nav" aria-label="Primary"><a class="brand" href="/">DPDP <em>Architect</em></a><nav class="links"><a href="/#pricing">Pricing</a><a href="/app.html">Sign in</a></nav><button class="theme" id="theme" type="button"></button></header>
-<main id="main" class="wrap" style="padding-top:7rem">
-<section class="no-print"><p class="label">Self-check · DPDP Act, 2023 and Rules, 2025</p><h1 style="font-size:clamp(2.2rem,5vw,3.6rem)">Where do you stand?</h1>
-<p class="intro">Answer 12 questions. Each one is tied to the section or Rule it comes from. Your answers are scored in this browser and never sent anywhere. This page is blocked from making network requests.</p>
-<form id="qf" class="card"></form>
-<div class="cta-row"><button class="btn solid" id="go" type="button">See my self-assessment</button></div></section>
-<section id="out" hidden><div class="report" id="report"></div>
-<div class="cta-row no-print"><button class="btn solid" id="pdf" type="button">Download PDF</button></div></section>
-<div class="wrap" style="padding:3rem clamp(1.25rem,4vw,3rem)"><p class="disclaimer"><strong>For your assistance only. Not legal advice. No assurance of compliance.</strong> DPDP Compliance Architect offers self-assessment questions, templates and calculators mapped to the Digital Personal Data Protection Act, 2023 and the DPDP Rules, 2025. It is not a legal opinion, audit or certification, and using it does not create a lawyer–client relationship. Results depend on your own answers and may be incomplete or out of date. Check the official texts (<a href="https://www.meity.gov.in/documents/act-and-policies/digital-personal-data-protection-act-2023" rel="noopener">the Act</a> and <a href="https://www.meity.gov.in/documents/act-and-policies/digital-personal-data-protection-rules-2025-gDOxUjMtQWa" rel="noopener">the Rules</a>, MeitY) and have a qualified professional of your choice review anything before you rely on it.</p></div>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/guided.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%232F6B63'/%3E%3Ctext x='16' y='20' font-size='9' font-weight='700' text-anchor='middle' fill='white' font-family='Arial'%3EASA%3C/text%3E%3C/svg%3E">
+<title>Guided walkthrough · DPDP Compliance Architect</title>
+<meta name="description" content="A guided self-assessment to help you understand the DPDP Act, 2023 and DPDP Rules, 2025. For your assistance only; not legal advice.">
+</head><body><a class="skip" href="#main">Skip to content</a>
+<header class="nav" aria-label="Primary"><a class="brand" href="/"><span class="asa" aria-hidden="true">ASA</span><span>DPDP Architect</span></a>
+<nav class="links"><a href="/#how">How it works</a><a href="/#result">What you get</a><a href="/app.html">Workspace</a></nav>
+<a class="btn solid small" href="/check.html">Start the walkthrough</a></header>
+<main id="main" class="wrap" style="padding-top:2rem">
+<p class="label">Guided walkthrough · DPDP Act, 2023 and Rules, 2025</p>
+<ol class="progress" id="prog" aria-label="Progress">
+ <li data-s="1"><b>1</b>What DPDP needs</li><li data-s="2"><b>2</b>Answer the self-check</li><li data-s="3"><b>3</b>Your score</li><li data-s="4"><b>4</b>Your action plan</li></ol>
+<div class="demo-bar no-print" id="demobar" hidden><span><span class="sample-tag">Sample data</span> <strong id="demoname"></strong>: <span id="demoabout"></span></span><button class="btn ghost small" id="demooff" type="button">Clear sample and use my own answers</button></div>
+
+<section class="step" id="s1" aria-labelledby="h1"><h1 id="h1">What the DPDP Act needs from you</h1>
+ <p class="lede">If your business collects personal data in digital form, such as names, phone numbers or order details, these are the main duties. Most apply from 13 May 2027.</p>
+ <div class="need">
+  <div class="card"><span class="ref">s. 5, Rule 3</span><h3>Tell people</h3><p>A clear notice of what you collect and why.</p></div>
+  <div class="card"><span class="ref">s. 6</span><h3>Ask properly</h3><p>Consent by a clear action, easy to withdraw.</p></div>
+  <div class="card"><span class="ref">s. 8(5), Rule 6</span><h3>Keep it safe</h3><p>Reasonable security, and logs kept for a year.</p></div>
+  <div class="card"><span class="ref">s. 8(6), Rule 7</span><h3>Report breaches</h3><p>Tell people and the Board, with a report within 72 hours.</p></div>
+  <div class="card"><span class="ref">s. 8(7), Rule 8</span><h3>Delete on time</h3><p>Erase data once its purpose is served.</p></div>
+  <div class="card"><span class="ref">s. 11–14</span><h3>Answer requests</h3><p>Access, correction, erasure, grievances and nomination.</p></div>
+ </div>
+ <div class="navrow no-print"><span></span><div class="cta-row" style="margin:0"><button class="btn ghost" type="button" id="demoon">Try with sample data</button><button class="btn solid" type="button" data-go="2">Next: answer the self-check</button></div></div></section>
+
+<section class="step" id="s2" aria-labelledby="h2"><h2 id="h2">Answer the self-check</h2>
+ <p style="color:var(--muted)">12 questions. Each one names the section or Rule it comes from. Your answers are scored in this browser and never sent anywhere.</p>
+ <form id="qf"></form>
+ <p id="count" class="label" aria-live="polite"></p>
+ <div class="navrow no-print"><button class="btn ghost" type="button" data-go="1">Back</button><button class="btn solid" type="button" data-go="3">Next: see my score</button></div></section>
+
+<section class="step" id="s3" aria-labelledby="h3"><h2 id="h3">Your indicative score</h2>
+ <div class="card"><div class="result"><div class="ring" id="ring"><div id="pct">0%</div></div><div><p class="big" id="sumtxt" style="margin-top:0"></p><p style="color:var(--muted);margin:0">The score is the share of applicable checks you answered "Yes". Unanswered questions count as gaps. It reflects your answers only.</p></div></div></div>
+ <div class="card" style="margin-top:1rem"><h3>Gaps to look at</h3><div style="overflow-x:auto"><table><thead><tr><th>Provision</th><th>What is missing</th><th>Status</th></tr></thead><tbody id="gaps"></tbody></table></div></div>
+ <div class="navrow no-print"><button class="btn ghost" type="button" data-go="2">Back</button><button class="btn solid" type="button" data-go="4">Next: my action plan</button></div></section>
+
+<section class="step" id="s4" aria-labelledby="h4"><h2 id="h4">Your action plan</h2>
+ <div class="card" id="plan"></div>
+ <div class="cta-row no-print"><button class="btn solid" id="pdf" type="button">Download action plan (PDF)</button><span style="color:var(--muted);font-size:.92rem">Uses your browser's "Save as PDF".</span></div>
+ <div class="grid2 no-print" style="margin-top:1.4rem">
+  <div class="card"><h3>Notice template</h3><p style="color:var(--muted);margin-top:0">Section 5 and Rule 3. Updates as you type.</p>
+   <div id="nf">
+    <div class="field"><label for="business">Business name</label><input type="text" id="business" maxlength="200"></div>
+    <div class="field"><label for="data">Personal data you collect (itemised)</label><textarea id="data" maxlength="600"></textarea></div>
+    <div class="field"><label for="purpose">Specific purpose</label><input type="text" id="purpose" maxlength="300"></div>
+    <div class="field"><label for="withdraw">Where to withdraw consent</label><input type="text" id="withdraw" maxlength="200"></div>
+    <div class="field"><label for="contact">Contact for rights and grievances</label><input type="text" id="contact" maxlength="200"></div>
+    <div class="field"><label for="days">Response period in days (not more than 90, Rule 14(3))</label><input type="number" id="days" min="1" max="90" value="30"></div></div>
+   <pre class="out" id="nout"></pre><button class="btn ghost small" id="copy" type="button">Copy template</button> <span id="copied" role="status" style="color:var(--muted)"></span></div>
+  <div class="card"><h3>Breach clock</h3><p style="color:var(--muted);margin-top:0">Rule 7: tell affected people and the Board without delay. The detailed report to the Board is due within 72 hours of becoming aware, unless the Board allows longer on a written request.</p>
+   <div class="field"><label for="aware">When did you become aware of the breach?</label><input type="datetime-local" id="aware"></div>
+   <p class="big" id="bout" aria-live="polite"></p><p id="bleft" style="color:var(--muted)"></p>
+   <p class="note">Separate from DPDP: CERT-In's 2022 directions ask many organisations to report certain cyber incidents within 6 hours.</p></div>
+ </div>
+ <div class="navrow no-print"><button class="btn ghost" type="button" data-go="3">Back</button><button class="btn ghost" type="button" id="reset">Clear all my answers</button></div></section>
+<div style="margin-top:2.5rem"><p class="disclaimer"><strong>For your assistance only. Not legal advice. No assurance of compliance.</strong> DPDP Compliance Architect offers self-assessment questions, templates and calculators mapped to the Digital Personal Data Protection Act, 2023 and the DPDP Rules, 2025. It is not a legal opinion, audit or certification, and using it does not create a lawyer–client relationship. Results depend on your own answers and may be incomplete or out of date. Check the official texts (<a href="https://www.meity.gov.in/documents/act-and-policies/digital-personal-data-protection-act-2023" rel="noopener">the Act</a> and <a href="https://www.meity.gov.in/documents/act-and-policies/digital-personal-data-protection-rules-2025-gDOxUjMtQWa" rel="noopener">the Rules</a>, MeitY) and have a qualified professional of your choice review anything before you rely on it.</p></div>
 </main>
-<footer><div class="wrap row"><span>DPDP Compliance Architect · Built with Akash Sync Agent</span>
-<nav class="legal-links" aria-label="Legal"><a href="/pricing.html">Pricing</a><a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a><a href="/refund.html">Refunds</a><a href="/cancellation.html">Cancellation</a><a href="https://github.com/advakash2356-sys/DPDP-Compliance-Architect-beta-version-">Source (MIT)</a></nav></div></footer>
+<footer><div class="wrap row"><span class="credit"><span class="asa" aria-hidden="true">ASA</span>Built with Akash Sync Agent</span>
+<nav class="legal-links" aria-label="Legal"><a href="/pricing.html">Pricing</a><a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a><a href="/refund.html">Refunds</a><a href="/cancellation.html">Cancellation</a><a href="https://github.com/advakash2356-sys/DPDP-Compliance-Architect-beta-version-">Source (MIT)</a></nav></div>
+<div class="wrap"><p style="margin:.8rem 0 0">DPDP Compliance Architect · Soft launch · Free</p></div></footer>
 <script type="module" src="/check.js"></script></body></html>

@@ -119,3 +119,9 @@ test("site stays private: noindex on every page, robots.txt disallows all", asyn
   assert.match(readFileSync("web/robots.txt", "utf8"), /Disallow: \/\n/);
   assert.match(readFileSync("vercel.json", "utf8"), /X-Robots-Tag/);
 });
+test("sample demo data scores as shown on the home page", async () => {
+  const { SAMPLE, ACTIONS, CHECKLIST, score } = await import("../lib/content.js");
+  const s = score(SAMPLE.answers); assert.equal(s.pct, 27); assert.equal(s.gaps.length, 8);
+  for (const c of CHECKLIST) assert.ok(ACTIONS[c.id], c.id);
+  assert.match(SAMPLE.name, /sample/i);
+});
