@@ -8,7 +8,7 @@ const views = ["v-signin", "v-paywall", "v-error", "v-app"];
 const view = v => views.forEach(id => $(id).hidden = id !== v);
 
 async function api(path, body) {
-  const r = await fetch(path, { method: body ? "POST" : "GET", headers: { authorization: "Bearer " + token, ...(body ? { "content-type": "application/json" } : {}) }, body: body ? JSON.stringify(body) : undefined });
+  const r = await fetch(path, { method: body ? "POST" : "GET", headers: { ...(token ? { authorization: "Bearer " + token } : {}), ...(body ? { "content-type": "application/json" } : {}) }, body: body ? JSON.stringify(body) : undefined });
   const d = await r.json().catch(() => ({}));
   if (r.status === 401) { signOut(true); throw new Error("auth"); }
   if (r.status === 402) { showPaywall(d); throw new Error("paywall"); }
@@ -39,14 +39,14 @@ async function subscribe() {
 const loadScript = src => new Promise((ok, no) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
 
 async function boot() {
-  if (!token) return showSignIn();
   let me;
-  try { me = await api("/api/me"); } catch (e) { if (e.message === "auth") return; view("v-error"); $("err-text").textContent = e.message; return; }
+  if (!token) { me = await fetch("/api/me").then(r => r.json()).catch(() => ({})); if (me.plan !== "test") return showSignIn(); }
+  if (!me) try { me = await api("/api/me"); } catch (e) { if (e.message === "auth") return; view("v-error"); $("err-text").textContent = e.message; return; }
   if (!me.access) return showPaywall(me);
   view("v-app"); $("user").innerHTML = `<span>${esc(me.email)}</span>`;
   const b = $("banner"); b.hidden = false;
   b.innerHTML = me.plan === "trial" ? `<span><strong>${me.daysLeft} day${me.daysLeft === 1 ? "" : "s"} left</strong> in your free trial. It ends on ${new Date(me.trialEnds).toLocaleDateString("en-IN", { dateStyle: "medium" })}, and you won't be charged automatically.</span><a class="btn ghost" href="/pricing.html">See pricing</a>`
-    : me.plan === "admin" ? `<span><strong>Admin access</strong> · all tools unlocked.</span>` : `<span><strong>Practitioner plan</strong> · active until ${new Date(me.paidUntil).toLocaleDateString("en-IN", { dateStyle: "medium" })}.</span>`;
+    : me.plan === "test" ? `<span><strong>Test mode</strong> · tools open without sign-in for this preview.</span>` : me.plan === "admin" ? `<span><strong>Admin access</strong> · all tools unlocked.</span>` : `<span><strong>Practitioner plan</strong> · active until ${new Date(me.paidUntil).toLocaleDateString("en-IN", { dateStyle: "medium" })}.</span>`;
   await tools();
 }
 

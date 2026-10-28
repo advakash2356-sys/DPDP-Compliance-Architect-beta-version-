@@ -160,3 +160,24 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 .gate .card{background:color-mix(in srgb,var(--surface) 93%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line)}
 html:not(.motion) .pin{height:auto;padding:5rem 0}html:not(.motion) .pin .stage{height:auto}html:not(.motion) .pin .scene{position:relative;opacity:1;margin-bottom:3rem}
 [hidden]{display:none!important}
+
+/* v2: calm hero, pricing tiers, self-check report */
+.hero.calm{min-height:88svh}.hero.calm h1{font-size:clamp(2.6rem,6.4vw,5.6rem);max-width:14ch}
+.hero.calm .layer{inset:0}.hero .trust{color:#BFB6A4;font-size:.9rem;margin-top:1.2rem}
+.reveal{transform:translateY(12px);transition:opacity .5s ease,transform .5s ease}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem}
+.tier{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:1.8rem;display:flex;flex-direction:column}
+.tier.pick{border-color:var(--accent);box-shadow:0 10px 40px -20px var(--accent)}
+.tier .amount{font-family:var(--serif);font-size:2.6rem;margin:.4rem 0}.tier .amount small{font-size:1rem;color:var(--muted)}
+.tier ul{padding-left:1.1rem;color:var(--muted);flex:1}.tier .btn{justify-content:center}
+.soon{font-size:.65rem;border:1px solid currentColor;border-radius:999px;padding:.1rem .5rem;margin-left:.4rem;letter-spacing:.08em}
+.q{border-top:1px solid var(--line);padding:1rem 0}.q p{margin:.2rem 0 .6rem}.q .ref{color:var(--label);font-size:.8rem;font-weight:600}
+.opts{display:flex;gap:.5rem;flex-wrap:wrap}.opts label{border:1px solid var(--line);border-radius:999px;padding:.35rem .9rem;cursor:pointer}
+.opts input{position:absolute;opacity:0}.opts input:checked+span{color:var(--accent);font-weight:700}.opts label:has(input:checked){border-color:var(--accent)}
+.opts label:has(input:focus-visible){outline:2px solid var(--accent)}
+.report{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:2rem;margin:2rem 0}
+.report table{width:100%}.sev{font-weight:700;color:var(--accent)}
+@media (max-width:800px){.tiers{grid-template-columns:1fr}}
+@media print{.nav,.no-print,footer,.theme{display:none!important}body{background:#fff;color:#000}.report{border:0;padding:0}.reveal{opacity:1;transform:none}}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem;margin:1.5rem 0}.kpis .tile{grid-column:auto}.kpis h3{font-size:2rem}
+#out,#review{scroll-margin-top:6rem}@media (max-width:600px){.report{padding:1.2rem}.report th:first-child,.report td:first-child{display:none}.report td,.report th{padding:.5rem .3rem;font-size:.85rem;letter-spacing:0}}

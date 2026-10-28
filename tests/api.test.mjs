@@ -75,3 +75,34 @@ test("cross-origin requests are refused", async () => {
   const r = new Request("https://x.test/api", { headers: { origin: "https://evil.test", host: "x.test", authorization: "Bearer " + await tok("a@a.in") } });
   assert.equal((await H.content(r)).status, 403);
 });
+
+test("lawyer review request validates, needs consent and stores", async () => {
+  __resetStore(); store().__reset({});
+  const r = b => H.reviewRequest(new Request("https://x.test/api/review", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(b) }));
+  assert.equal((await r({ name: "A", email: "bad" })).status, 400);
+  assert.equal((await r({ name: "A", email: "a@b.in" })).status, 400);
+  const ok = await r({ name: "A", email: "a@b.in", consent: true, pct: "50", gaps: "s. 5" });
+  assert.equal(ok.status, 200); assert.match((await ok.json()).id, /^LR-/);
+});
+test("public checklist mirrors the server checklist", async () => {
+  const pub = await import("../web/public-data.js"); const { CHECKLIST } = await import("../lib/content.js");
+  assert.deepEqual(pub.CHECKLIST, CHECKLIST);
+});
+
+test("admin dashboard is owner-only; TEST_MODE opens tools but not admin", async () => {
+  __resetStore(); store().__reset({});
+  assert.equal(await st(H.admin(await req())), 401);
+  assert.equal(await st(H.admin(await req(await tok("someone@x.in")))), 403);
+  const ok = await H.admin(await req(await tok("adv.akash2356@gmail.com"))); assert.equal(ok.status, 200); assert.ok(Array.isArray((await ok.json()).users));
+  assert.equal(await st(H.content(await req())), 401);
+  process.env.TEST_MODE = "true";
+  try { assert.equal(await st(H.content(await req())), 200); assert.equal((await (await H.me(await req())).json()).plan, "test"); assert.equal(await st(H.admin(await req())), 401); }
+  finally { delete process.env.TEST_MODE; }
+});
+test("track accepts known events only", async () => {
+  __resetStore(); store().__reset({});
+  const r = b => H.track(new Request("https://x.test/api/track", { method: "POST", body: JSON.stringify(b) }));
+  assert.equal((await r({ ev: "hack" })).status, 400);
+  assert.equal((await r({ ev: "visit", src: "reddit-1<x>" })).status, 200);
+  assert.equal((await store().listAll()).events[0].src, "reddit-1x");
+});
