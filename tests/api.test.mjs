@@ -2,7 +2,7 @@ import { test, before } from "node:test";
 import assert from "node:assert/strict";
 import { generateKeyPair, SignJWT, createLocalJWKSet, exportJWK } from "jose";
 import { createHmac } from "node:crypto";
-process.env.STORE_DRIVER = "memory"; delete process.env.VERCEL; delete process.env.TRIAL_STORE_URL; delete process.env.TRIAL_STORE_SECRET; // never touch the real store from tests
+process.env.STORE_DRIVER = "memory"; delete process.env.VERCEL; delete process.env.TRIAL_STORE_URL; delete process.env.TRIAL_STORE_SECRET; delete process.env.TEST_MODE; // never touch the real store from tests
 const auth = await import("../lib/auth.js");
 const { __resetStore, store } = await import("../lib/store.js");
 const H = await import("../lib/handlers.js");
