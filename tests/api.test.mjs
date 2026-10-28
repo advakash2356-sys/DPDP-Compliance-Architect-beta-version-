@@ -2,7 +2,7 @@ import { test, before } from "node:test";
 import assert from "node:assert/strict";
 import { generateKeyPair, SignJWT, createLocalJWKSet, exportJWK } from "jose";
 import { createHmac } from "node:crypto";
-process.env.STORE_DRIVER = "memory"; delete process.env.VERCEL;
+process.env.STORE_DRIVER = "memory"; delete process.env.VERCEL; delete process.env.TRIAL_STORE_URL; delete process.env.TRIAL_STORE_SECRET; // never touch the real store from tests
 const auth = await import("../lib/auth.js");
 const { __resetStore, store } = await import("../lib/store.js");
 const H = await import("../lib/handlers.js");
@@ -67,16 +67,9 @@ test("decide(): halted subscription loses access", () => {
   assert.equal(decide({ email: "a@b" }, { trialStart: 0, paidUntil: Date.now() + DAY, sub_status: "halted" }, Date.now()).access, false);
 });
 test("store not configured on Vercel fails closed", async () => {
-  const saved = { u: process.env.TRIAL_STORE_URL, s: process.env.TRIAL_STORE_SECRET };
-  delete process.env.TRIAL_STORE_URL; delete process.env.TRIAL_STORE_SECRET;
   __resetStore(); process.env.VERCEL = "1";
-  try { assert.equal(await st(H.me(await req(await tok("z@z.in")))), 503); }
-  finally {
-    delete process.env.VERCEL;
-    if (saved.u !== undefined) process.env.TRIAL_STORE_URL = saved.u;
-    if (saved.s !== undefined) process.env.TRIAL_STORE_SECRET = saved.s;
-    __resetStore();
-  }
+  assert.equal(await st(H.me(await req(await tok("z@z.in")))), 503);
+  delete process.env.VERCEL; __resetStore();
 });
 test("cross-origin requests are refused", async () => {
   const r = new Request("https://x.test/api", { headers: { origin: "https://evil.test", host: "x.test", authorization: "Bearer " + await tok("a@a.in") } });
