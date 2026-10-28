@@ -1,6 +1,6 @@
 # DPDP Compliance Architect
 
-An educational workspace on India's **Digital Personal Data Protection Act, 2023** and **DPDP Rules, 2025**, by Adv. Akash Sharma. Built with Akash Sync Agent.
+An educational workspace on India's **Digital Personal Data Protection Act, 2023** and **DPDP Rules, 2025**. For your assistance only, not legal advice. Built with Akash Sync Agent.
 
 **Live:** https://dpdp-compliance-architect-beta-vers.vercel.app
 

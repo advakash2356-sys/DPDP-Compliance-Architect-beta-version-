@@ -30,13 +30,7 @@ function doPost(e) {
   }
   if (b.action === 'listAll') {
     var rows = function (name) { var x = SpreadsheetApp.getActive().getSheetByName(name); if (!x || x.getLastRow() < 2) return []; var v = x.getDataRange().getValues(), h = v.shift(); return v.map(function (r) { var o = {}; h.forEach(function (k, i) { o[k] = r[i] instanceof Date ? r[i].getTime() : r[i]; }); return o; }); };
-    return out_({ ok: true, users: rows('users'), reviews: rows('Reviews'), events: rows('Events') });
-  }
-  if (b.action === 'addReview') {
-    var rs = SpreadsheetApp.getActive().getSheetByName('Reviews') || SpreadsheetApp.getActive().insertSheet('Reviews');
-    if (rs.getLastRow() === 0) rs.appendRow(['at', 'id', 'name', 'email', 'phone', 'org', 'role', 'pct', 'gaps', 'note']);
-    rs.appendRow([new Date(), String(b.id), String(b.name), String(b.email), String(b.phone), String(b.org), String(b.role), String(b.pct), String(b.gaps), String(b.note)]);
-    return out_({ ok: true });
+    return out_({ ok: true, users: rows('users'), events: rows('Events') });
   }
   var sub = String(b.sub || ''); if (!sub) return out_({ ok: false, error: 'no sub' });
   var lock = LockService.getScriptLock(); lock.waitLock(10000);

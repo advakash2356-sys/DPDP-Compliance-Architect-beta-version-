@@ -5,7 +5,7 @@ import { readFile } from "node:fs/promises";
 import { extname, join, normalize } from "node:path";
 process.env.STORE_DRIVER ||= "memory";
 const H = await import("../lib/handlers.js");
-const routes = { "GET /api/me": H.me, "GET /api/tools/content": H.content, "POST /api/tools/score": H.scoreTool, "POST /api/tools/notice": H.noticeTool, "POST /api/tools/breach": H.breachTool, "POST /api/billing/subscribe": H.subscribe, "POST /api/billing/webhook": H.webhook, "POST /api/review": H.reviewRequest, "POST /api/track": H.track, "GET /api/admin": H.admin };
+const routes = { "GET /api/me": H.me, "POST /api/billing/subscribe": H.subscribe, "POST /api/billing/webhook": H.webhook, "POST /api/track": H.track, "GET /api/admin": H.admin };
 let mint;
 if (process.env.DEV_AUTH === "1") {
   const { generateKeyPair, SignJWT, exportJWK, createLocalJWKSet } = await import("jose");

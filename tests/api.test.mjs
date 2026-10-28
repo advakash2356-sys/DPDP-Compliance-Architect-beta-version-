@@ -2,7 +2,7 @@ import { test, before } from "node:test";
 import assert from "node:assert/strict";
 import { generateKeyPair, SignJWT, createLocalJWKSet, exportJWK } from "jose";
 import { createHmac } from "node:crypto";
-process.env.STORE_DRIVER = "memory"; delete process.env.VERCEL; delete process.env.TRIAL_STORE_URL; delete process.env.TRIAL_STORE_SECRET; delete process.env.TEST_MODE; // never touch the real store from tests
+process.env.STORE_DRIVER = "memory"; delete process.env.VERCEL; delete process.env.TRIAL_STORE_URL; delete process.env.TRIAL_STORE_SECRET; delete process.env.TEST_MODE; process.env.SOFT_LAUNCH = "false"; // never touch the real store from tests
 const auth = await import("../lib/auth.js");
 const { __resetStore, store } = await import("../lib/store.js");
 const H = await import("../lib/handlers.js");
@@ -14,27 +14,30 @@ const req = async (t, body, method = body ? "POST" : "GET") => new Request("http
 const st = async r => (await r).status;
 const DAY = 86400000;
 
-test("tools reject anonymous and forged tokens", async () => {
-  assert.equal(await st(H.content(await req())), 401);
-  assert.equal(await st(H.noticeTool(await req("a.b.c", {}))), 401);
+test("sign-in rejects anonymous and forged tokens", async () => {
+  assert.equal(await st(H.me(await req())), 401);
+  assert.equal(await st(H.me(await req("a.b.c"))), 401);
   const other = await new SignJWT({ email: "x@y.z", email_verified: true }).setProtectedHeader({ alg: "HS256" }).setAudience(auth.clientId()).setIssuer(ISS).setExpirationTime("1h").sign(new Uint8Array(32));
-  assert.equal(await st(H.content(await req(other))), 401);
+  assert.equal(await st(H.me(await req(other))), 401);
+});
+test("there are no server endpoints that receive tool inputs", () => {
+  for (const k of ["content", "scoreTool", "noticeTool", "breachTool", "reviewRequest"]) assert.equal(H[k], undefined, k);
 });
 test("wrong audience and unverified email are rejected", async () => {
   const bad = await new SignJWT({ email: "a@b.c", email_verified: true }).setProtectedHeader({ alg: "RS256", kid: "t" }).setSubject("s").setIssuer(ISS).setAudience("someone-else").setExpirationTime("1h").sign(priv);
   assert.equal(await st(H.me(await req(bad))), 401);
   assert.equal(await st(H.me(await req(await tok("u@b.c", { email_verified: false })))), 401);
 });
-test("new user gets a 7-day trial and tools work", async () => {
+test("new user gets a 7-day trial", async () => {
   __resetStore(); (await import("../lib/store.js")).store().__reset({});
-  const t = await tok("new@user.in");
-  const m = await (await H.me(await req(t))).json();
+  const m = await (await H.me(await req(await tok("new@user.in")))).json();
   assert.equal(m.plan, "trial"); assert.equal(m.daysLeft, 7);
-  assert.equal(await st(H.content(await req(t))), 200);
-  const n = await (await H.noticeTool(await req(t, { business: "Acme", days: 30 }))).json();
-  assert.match(n.text, /Acme/);
-  const b = await (await H.breachTool(await req(t, { aware: "2026-01-01T00:00:00Z" }))).json();
-  assert.equal(b.deadline, "2026-01-04T00:00:00.000Z");
+});
+test("soft launch: payments off means free access, even after the trial", async () => {
+  process.env.SOFT_LAUNCH = "true";
+  try { const t = await tok("old2@user.in"); await H.me(await req(t)); await store().setSubscription("sub-old2@user.in", { trialStart: 0 });
+    const m = await (await H.me(await req(t))).json(); assert.equal(m.plan, "free"); assert.equal(m.access, true); }
+  finally { process.env.SOFT_LAUNCH = "false"; }
 });
 test("trial start is server-side and not reset by signing in again", async () => {
   const t = await tok("old@user.in");
@@ -42,13 +45,12 @@ test("trial start is server-side and not reset by signing in again", async () =>
   await store().setSubscription("sub-old@user.in", { trialStart: Date.now() - 8 * DAY });
   const m = await (await H.me(await req(t))).json();
   assert.equal(m.plan, "expired");
-  for (const f of [H.content, H.scoreTool, H.noticeTool, H.breachTool]) assert.equal(await st(f(await req(t, f === H.content ? undefined : {}))), 402);
+  assert.equal(m.access, false);
 });
 test("admin bypass", async () => {
   const t = await tok("adv.akash2356@gmail.com");
   await H.me(await req(t)); await store().setSubscription("sub-adv.akash2356@gmail.com", { trialStart: 0 });
   assert.equal((await (await H.me(await req(t))).json()).plan, "admin");
-  assert.equal(await st(H.content(await req(t))), 200);
 });
 test("payments are off without keys: subscribe returns coming soon", async () => {
   const r = await H.subscribe(await req(await tok("old@user.in"), {}));
@@ -73,20 +75,26 @@ test("store not configured on Vercel fails closed", async () => {
 });
 test("cross-origin requests are refused", async () => {
   const r = new Request("https://x.test/api", { headers: { origin: "https://evil.test", host: "x.test", authorization: "Bearer " + await tok("a@a.in") } });
-  assert.equal((await H.content(r)).status, 403);
+  assert.equal((await H.track(new Request("https://x.test/api/track", { method: "POST", headers: { origin: "https://evil.test", host: "x.test" }, body: "{}" }))).status, 403);
 });
 
-test("lawyer review request validates, needs consent and stores", async () => {
-  __resetStore(); store().__reset({});
-  const r = b => H.reviewRequest(new Request("https://x.test/api/review", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(b) }));
-  assert.equal((await r({ name: "A", email: "bad" })).status, 400);
-  assert.equal((await r({ name: "A", email: "a@b.in" })).status, 400);
-  const ok = await r({ name: "A", email: "a@b.in", consent: true, pct: "50", gaps: "s. 5" });
-  assert.equal(ok.status, 200); assert.match((await ok.json()).id, /^LR-/);
-});
 test("public checklist mirrors the server checklist", async () => {
   const pub = await import("../web/public-data.js"); const { CHECKLIST } = await import("../lib/content.js");
   assert.deepEqual(pub.CHECKLIST, CHECKLIST);
+});
+test("browser tool code is identical to the server copy and makes no network calls", async () => {
+  const { readFileSync } = await import("node:fs");
+  assert.equal(readFileSync("web/content.js", "utf8"), readFileSync("lib/content.js", "utf8"));
+  for (const f of ["web/check.js", "web/content.js"]) assert.doesNotMatch(readFileSync(f, "utf8"), /fetch\(|track\(|XMLHttpRequest|sendBeacon/, f);
+  assert.doesNotMatch(readFileSync("web/app.js", "utf8"), /\/api\/tools|\/api\/review/);
+  assert.doesNotMatch(readFileSync("web/check.html", "utf8"), /track\.js|\/api\//);
+});
+test("site copy: no advocate name, no paid review, no compliance promises", async () => {
+  const { readFileSync, readdirSync } = await import("node:fs");
+  for (const f of readdirSync("web").filter(f => /\.(html|js)$/.test(f))) {
+    const t = readFileSync("web/" + f, "utf8");
+    assert.doesNotMatch(t, /Akash Sharma|Adv\.|adv\.akash|lawyer review|guarantee|100%|audit-ready|9,999|₹999/i, f);
+  }
 });
 
 test("admin dashboard is owner-only; TEST_MODE opens tools but not admin", async () => {
@@ -94,9 +102,8 @@ test("admin dashboard is owner-only; TEST_MODE opens tools but not admin", async
   assert.equal(await st(H.admin(await req())), 401);
   assert.equal(await st(H.admin(await req(await tok("someone@x.in")))), 403);
   const ok = await H.admin(await req(await tok("adv.akash2356@gmail.com"))); assert.equal(ok.status, 200); assert.ok(Array.isArray((await ok.json()).users));
-  assert.equal(await st(H.content(await req())), 401);
   process.env.TEST_MODE = "true";
-  try { assert.equal(await st(H.content(await req())), 200); assert.equal((await (await H.me(await req())).json()).plan, "test"); assert.equal(await st(H.admin(await req())), 401); }
+  try { assert.equal((await (await H.me(await req())).json()).plan, "test"); assert.equal(await st(H.admin(await req())), 401); }
   finally { delete process.env.TEST_MODE; }
 });
 test("track accepts known events only", async () => {
